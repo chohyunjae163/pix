@@ -28,7 +28,7 @@ main :: proc() {
   
   fmt.println(render_target.texture.format)
 
-  droplet_pos := 50
+  droplet_pos := 10
   for !rl.WindowShouldClose() {
   
     //update the pixels
@@ -45,22 +45,14 @@ main :: proc() {
 
 init_game :: proc() {
   pixels = make([]rl.Color,num_pixels)
-  clear_render_target()
   render_target = rl.LoadRenderTexture(canvas_width,canvas_height)
 }
 
 update_game :: proc(droplet : int) {
-
-  //do all the work here
-  //a droplet
-  //
-  //position
-  //color
-  //what is the input
-  clear_render_target()
-  pos : int
+  mem.zero_slice(pixels);
+  
   if droplet < 700 {
-    pos = canvas_height * droplet + canvas_width / 2;
+    pos := canvas_height * droplet + canvas_width / 2;
     droplet_width :: 8
     droplet_height :: 8
     droplet_size :: droplet_width * droplet_height
@@ -90,13 +82,4 @@ end_game :: proc() {
   delete(pixels)
   rl.UnloadRenderTexture(render_target)
   rl.CloseWindow()
-}
-
-clear_render_target :: proc() {
-  for i:=0; i < num_pixels; i += 1 {
-    pixels[i].r = 0
-    pixels[i].g = 0
-    pixels[i].b = 0
-    pixels[i].a = 255
-  }
 }
